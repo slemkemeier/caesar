@@ -1,25 +1,22 @@
-from helpers import alphabet_position, rotate_character
-from sys import argv
-import sys
 
-def encrypt(text, rot):
+
+ALPHABET_LOWERCASE = "abcdefghijklmnopqrstuvwxyz"
+ALPHABET_UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+def alphabet_position(letter):
+    alphabet = ALPHABET_LOWERCASE if letter.islower() else ALPHABET_UPPERCASE
+    return alphabet.index(letter)
+
+def rotate_char(char, rotation):
+    if not char.isalpha():
+        return char
+
+    alphabet = ALPHABET_LOWERCASE if char.islower() else ALPHABET_UPPERCASE
+    new_pos = (alphabet_position(char) + rotation) % 26
+    return alphabet[new_pos]
+
+def encrypt(text, rotation):
     answer = ""
     for char in text:
-        answer += rotate_character(char, rot)
+        answer += rotate_char(char, rotation)
     return answer
-
-def validation(argv):
-    if len(argv) < 2:
-        return False
-    elif not argv[1].isdigit():
-        return False
-    else:
-        return True
-
-
-#if validation(argv) == False:
-#    print("sorry")
-#    sys.exit()
-
-#text = input("Type a message:\n")
-#print(encrypt(text, argv[1]))
